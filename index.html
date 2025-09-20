@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Fullscreen</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: black;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      pointer-events: none; /* desactiva clic en el video */
+    }
+
+    #startBtn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px 30px;
+      font-size: 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 12px;
+      background: white;
+      color: black;
+      font-weight: bold;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Video -->
+  <video id="bg-video" loop playsinline>
+    <source src="videoplayback (1).mp4" type="video/mp4">
+    Tu navegador no soporta video HTML5.
+  </video>
+
+  <!-- Botón para iniciar -->
+  <button id="startBtn">Comenzar Video (no salgas porque luego no vas a ver bien al conejo que me mataste, naco).</button>
+
+  <script>
+    const video = document.getElementById("bg-video");
+    const btn = document.getElementById("startBtn");
+
+    btn.addEventListener("click", () => {
+      video.muted = false;   // activar sonido
+      video.volume = 1.0;    // volumen al 100%
+      video.play();          // reproducir
+      btn.style.display = "none"; // ocultar botón
+
+      // fullscreen automático
+      if (video.requestFullscreen) {
+        video.requestFullscreen();
+      } else if (video.webkitRequestFullscreen) {
+        video.webkitRequestFullscreen();
+      } else if (video.msRequestFullscreen) {
+        video.msRequestFullscreen();
+      }
+    });
+
+    // Bloquear teclas que podrían pausar/adelantar
+    document.addEventListener("keydown", e => {
+      e.preventDefault();
+    });
+  </script>
+
+</body>
+</html>
